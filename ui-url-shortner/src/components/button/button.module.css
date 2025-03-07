@@ -1,0 +1,31 @@
+.button {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 1.2rem;
+    background-color: #4e9af1;
+    color: #ffffff;
+    border: none;
+    border-radius: 50px; /* Rounded button edges for a smooth look */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .button:hover {
+    background-color: #3578e5; /* Darker shade on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Bigger shadow on hover */
+    transform: translateY(-3px); /* Slight lift effect on hover */
+  }
+  
+  .button:focus {
+    outline: none; /* Removes default focus outline */
+    box-shadow: 0 0 5px 2px rgba(72, 122, 204, 0.7); /* Add focus outline with a blue glow */
+  }
+  
+  .button:active {
+    transform: translateY(2px); /* Button presses down slightly when clicked */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow reduces on click */
+  }
+  
