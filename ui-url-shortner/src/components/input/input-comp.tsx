@@ -23,6 +23,7 @@ export default function InputComp() {
       console.log(data);
       console.log(data.data.shortenedUrl);
       setShortenedUrl(data.data.shortenedUrl);
+      setOriginalUrl("");
     }
   };
 
