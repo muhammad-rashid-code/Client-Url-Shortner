@@ -1,0 +1,6 @@
+.historyComponent {
+    flex: 3; /* Takes 1 part of the available space */
+    width: 30%; /* Make it span the full width */
+    border: 1px solid blue;
+    padding: 10px;
+  }

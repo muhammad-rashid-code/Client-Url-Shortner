@@ -1,7 +1,16 @@
+/* page.module.css */
 .main {
-  border: 1px solid black;
-  display: flex;
-  justify-content: center;
-  height: 100vh;
   align-items: center;
+  display: flex;
+  flex-direction: row; /* Stack items vertically (Y-axis) */
+  height: 100vh; /* Full viewport height */
+}
+.inputComponent {
+  flex: 7; /* Takes 3 parts of the available space */
+  width: 100%; /* Make it span the full width */
+  padding: 10px;
+}
+.historyComponent {
+  flex: 3; /* Takes 1 part of the available space */
+  width: 100%;
 }
