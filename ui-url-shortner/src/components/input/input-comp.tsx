@@ -4,7 +4,7 @@ import ButtonComp from "../button/button";
 import styles from "./input-comp.module.css";
 import ShortenURLdiv from "../shorten_url/shorten-url_div";
 
-export default function InputComp({ className }) {
+export default function InputComp() {
   const [originalUrl, setOriginalUrl] = useState<string>("");
   const [shortenedUrl, setShortenedUrl] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false); // Add loading state

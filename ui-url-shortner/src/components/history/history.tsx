@@ -2,9 +2,15 @@
 import React, { useEffect, useState } from "react";
 import styles from "./history.module.css"; // Assuming you have styles defined in this CSS module
 
-export default function HistoryComp({ className }: { className?: string }) {
+// Define the URL type based on the expected structure of the API response
+interface URLData {
+  originalUrl: string;
+  shortenedUrl: string;
+}
+
+export default function HistoryComp() {
   // State variables
-  const [urls, setUrls] = useState<any[]>([]); // Holds the list of shortened URLs
+  const [urls, setUrls] = useState<URLData[]>([]); // Holds the list of shortened URLs
   const [loading, setLoading] = useState<boolean>(true); // Loading state while fetching data
   const [error, setError] = useState<string | null>(null); // Error state for handling fetch issues
 
@@ -16,8 +22,8 @@ export default function HistoryComp({ className }: { className?: string }) {
 
         // Make the API request to get shortened URLs
         const response = await fetch(
-          "https://server-url-shortner.vercel.app/url/history"
-        ); // Replace with your actual API URL
+          "https://server-url-shortner.vercel.app/url/red/history"
+        );
 
         // Check for successful response
         if (!response.ok) {
@@ -29,14 +35,20 @@ export default function HistoryComp({ className }: { className?: string }) {
         console.log("Data received:", data);
 
         // Validate the data structure before updating state
-        if (data?.status === false && data?.data?.urls) {
+        if (data?.status === false && Array.isArray(data?.data?.urls)) {
           setUrls(data.data.urls); // Update state with URLs
         } else {
           throw new Error("Unexpected data structure or empty URLs");
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error("Error fetching URLs:", err);
-        setError(err.message || "An error occurred while fetching URLs");
+
+        // Check if the error is an instance of Error and get the message
+        if (err instanceof Error) {
+          setError(err.message || "An error occurred while fetching URLs");
+        } else {
+          setError("An unknown error occurred");
+        }
       } finally {
         setLoading(false); // Set loading to false after the fetch process completes
         console.log("Data fetching completed.");
@@ -47,7 +59,7 @@ export default function HistoryComp({ className }: { className?: string }) {
   }, []); // The empty dependency array ensures the effect runs once after the component mounts
 
   return (
-    <div className={`${styles.main} ${className}`}>
+    <div className={styles.main}>
       <h2>Your Shortened URLs</h2>
 
       {/* Show loading state while data is being fetched */}

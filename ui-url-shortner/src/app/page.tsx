@@ -7,10 +7,10 @@ export default function Rootpage() {
     <div className={styles.main}>
       {/* Adding specific classes to each component */}
       <div className={styles.inputComponent}>
-        <InputComp className={styles.inputComponent} />
+        <InputComp />
       </div>
       <div className={styles.historyComponent}>
-        <HistoryComp className={styles.historyComponent} />
+        <HistoryComp />
       </div>
     </div>
   );
