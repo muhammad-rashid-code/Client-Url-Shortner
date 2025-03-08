@@ -38,7 +38,7 @@ export default function InputComp() {
         type="text"
         name=""
         id="urlShortner"
-        placeholder="eg:https://www.youtube.com/watch?v=TIQ5hrfermg"
+        placeholder="https://www.youtube.com"
         value={originalUrl}
         onChange={(e) => setOriginalUrl(e.target.value)}
       />
