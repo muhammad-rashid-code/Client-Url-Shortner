@@ -5,6 +5,7 @@ import styles from "./history.module.css"; // Assuming your CSS module is here
 interface URLData {
   originalUrl: string;
   shortenedUrl: string;
+  timestamp: string; // Add timestamp to maintain the order
 }
 
 export default function HistoryComp() {
@@ -13,7 +14,7 @@ export default function HistoryComp() {
   const [error, setError] = useState<string | null>(null);
 
   const [currentPage, setCurrentPage] = useState<number>(1); // To manage the current page
-  const [perPage] = useState<number>(10); // Items per page
+  const [perPage] = useState<number>(3); // Items per page (3 URLs)
 
   useEffect(() => {
     const fetchUrls = async () => {
@@ -34,7 +35,12 @@ export default function HistoryComp() {
         if (data?.status === false || !Array.isArray(data?.data?.urls)) {
           setError("Unexpected data structure or no URLs found.");
         } else {
-          setUrls(data.data.urls);
+          // Add a timestamp or any identifier for FIFO behavior
+          const urlsWithTimestamp = data.data.urls.map((url: URLData) => ({
+            ...url,
+            timestamp: new Date().toISOString(),
+          }));
+          setUrls(urlsWithTimestamp);
         }
       } catch (err: unknown) {
         console.error("Error fetching URLs:", err);
@@ -56,8 +62,13 @@ export default function HistoryComp() {
   const indexOfLastUrl = currentPage * perPage;
   const indexOfFirstUrl = indexOfLastUrl - perPage;
 
-  // If on the first page, show only 3 URLs
-  const currentUrls = currentPage === 1 ? urls.slice(0, 3) : urls.slice(indexOfFirstUrl, indexOfLastUrl);
+  // Sort the URLs by timestamp (FIFO: first fetched first shown)
+  const sortedUrls = [...urls].sort((a, b) => {
+    return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
+  });
+
+  // Get the URLs for the current page
+  const currentUrls = sortedUrls.slice(indexOfFirstUrl, indexOfLastUrl);
 
   // Handle next and previous page clicks
   const nextPage = () => {

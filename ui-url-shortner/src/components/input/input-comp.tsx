@@ -10,59 +10,59 @@ export default function InputComp() {
   const [isLoading, setIsLoading] = useState<boolean>(false); // Add loading state
   const [error, setError] = useState<string>(""); // State for error message
 
-  const validateUrl = (url: string) => {
-    // Regular expression to validate URL
-    const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w-]*)*$/;
-    return urlPattern.test(url);
-  };
-
   const shortenHandler = async () => {
+    // Check if the input is empty
     if (!originalUrl.trim()) {
-      setError("URL cannot be empty.");
-      return;
-    }
-
-    if (!validateUrl(originalUrl)) {
-      setError("Please enter a valid URL.");
+      setError("Please enter a URL to shorten.");
       return;
     }
 
     setError(""); // Clear previous errors if input is valid
     setIsLoading(true); // Set loading to true when the shortening starts
 
-    const APIresponse = await fetch(
-      "https://server-url-shortner.vercel.app/url/shorten",
-      {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({ originalUrl }),
+    try {
+      const APIresponse = await fetch(
+        "https://server-url-shortner.vercel.app/url/shorten",
+        {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({ originalUrl }),
+        }
+      );
+
+      if (APIresponse.ok) {
+        const data = await APIresponse.json();
+        console.log("Shortened URL data:", data);
+        setShortenedUrl(data.data.shortenedUrl);
+        setOriginalUrl(""); // Reset input field
+      } else {
+        const errorData = await APIresponse.json();
+        console.error("Error response:", errorData);
+        setError(
+          "Sorry, something went wrong while shortening your URL. Please try again."
+        );
       }
-    );
-
-    if (APIresponse.ok) {
-      const data = await APIresponse.json();
-      console.log(data);
-      console.log(data.data.shortenedUrl);
-      setShortenedUrl(data.data.shortenedUrl);
-      setOriginalUrl(""); // Reset input field
-    } else {
-      setError("Failed to shorten the URL. Please try again.");
+    } catch (error) {
+      console.error("Request error:", error);
+      setError(
+        "An error occurred while processing your request. Please try again."
+      );
+    } finally {
+      setIsLoading(false); // Set loading to false when the process finishes
     }
-
-    setIsLoading(false); // Set loading to false when the process finishes
   };
 
   return (
     <div className={styles.main}>
       <h1 className={styles.heading}>URL Shortener</h1>
       <label htmlFor="urlShortner" className={styles.inplabel}>
-        Enter URL
+        Enter a URL to shorten
       </label>
       <input
         className={`${styles.input} ${error ? styles.errorInput : ""}`} // Add error styling to input
         type="text"
         id="urlShortner"
-        placeholder="https://www.example.com"
+        placeholder="Enter your URL here"
         value={originalUrl}
         onChange={(e) => setOriginalUrl(e.target.value)}
       />
@@ -83,7 +83,7 @@ export default function InputComp() {
             fill="currentColor"
           ></path>
         </svg>
-        <ButtonComp btnlabel={"Launch"} btnhandler={shortenHandler} />
+        <ButtonComp btnlabel={"Shorten URL"} btnhandler={shortenHandler} />
       </div>
 
       {/* Loader display during URL shortening */}
