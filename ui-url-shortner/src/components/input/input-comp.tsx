@@ -8,9 +8,28 @@ export default function InputComp() {
   const [originalUrl, setOriginalUrl] = useState<string>("");
   const [shortenedUrl, setShortenedUrl] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false); // Add loading state
+  const [error, setError] = useState<string>(""); // State for error message
+
+  const validateUrl = (url: string) => {
+    // Regular expression to validate URL
+    const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w-]*)*$/;
+    return urlPattern.test(url);
+  };
 
   const shortenHandler = async () => {
+    if (!originalUrl.trim()) {
+      setError("URL cannot be empty.");
+      return;
+    }
+
+    if (!validateUrl(originalUrl)) {
+      setError("Please enter a valid URL.");
+      return;
+    }
+
+    setError(""); // Clear previous errors if input is valid
     setIsLoading(true); // Set loading to true when the shortening starts
+
     const APIresponse = await fetch(
       "https://server-url-shortner.vercel.app/url/shorten",
       {
@@ -25,25 +44,32 @@ export default function InputComp() {
       console.log(data);
       console.log(data.data.shortenedUrl);
       setShortenedUrl(data.data.shortenedUrl);
-      setOriginalUrl("");
+      setOriginalUrl(""); // Reset input field
+    } else {
+      setError("Failed to shorten the URL. Please try again.");
     }
+
     setIsLoading(false); // Set loading to false when the process finishes
   };
 
   return (
     <div className={styles.main}>
-      <h1 className={styles.heading}>URL Shortner</h1>
+      <h1 className={styles.heading}>URL Shortener</h1>
       <label htmlFor="urlShortner" className={styles.inplabel}>
         Enter URL
       </label>
       <input
-        className={styles.input}
+        className={`${styles.input} ${error ? styles.errorInput : ""}`} // Add error styling to input
         type="text"
         id="urlShortner"
         placeholder="https://www.example.com"
         value={originalUrl}
         onChange={(e) => setOriginalUrl(e.target.value)}
       />
+
+      {/* Error message */}
+      {error && <p className={styles.errorText}>{error}</p>}
+
       <div className={styles.button}>
         <svg
           height="24"
