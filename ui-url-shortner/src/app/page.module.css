@@ -1,16 +1,21 @@
-/* page.module.css */
 .main {
-  align-items: center;
+  box-sizing: content-box;
   display: flex;
-  flex-direction: row; /* Stack items vertically (Y-axis) */
-  height: 100vh; /* Full viewport height */
+  justify-content: center;
+  height: 100vh;
+  align-items: center;
+  background-color: #e8e8e8;
 }
+
 .inputComponent {
-  flex: 7; /* Takes 3 parts of the available space */
-  width: 100%; /* Make it span the full width */
-  padding: 10px;
+  flex: 3;
+  margin: 0 1vw 0 1vw;
+  display: flex;
+  justify-content: center;
 }
+
 .historyComponent {
-  flex: 3; /* Takes 1 part of the available space */
-  width: 100%;
+  flex: 1;
+  margin: 0 1vw 0 1vw;
+  border: 1px solid black;
 }
