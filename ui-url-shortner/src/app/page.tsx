@@ -1,17 +1,21 @@
-import InputComp from "@/components/input/input-comp";
-import styles from "./page.module.css";
-import HistoryComp from "@/components/history/history";
+"use client";
+
+import ButtonComp from "@/components/common/button/button";
 
 export default function Rootpage() {
+  const increase = () => {
+    console.log("good");
+  };
   return (
-    <div className={styles.main}>
-      {/* Adding specific classes to each component */}
-      <div className={styles.inputComponent}>
-        <InputComp />
+    <>
+      <div>
+        <ButtonComp 
+          btnLabel={"submit"}
+          btnHanler={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
       </div>
-      <div className={styles.historyComponent}>
-        <HistoryComp />
-      </div>
-    </div>
+    </>
   );
 }
