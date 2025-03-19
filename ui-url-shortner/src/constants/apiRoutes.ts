@@ -27,9 +27,10 @@
 //   postUrl: BASE_URL + "url/shorten",
 // };
 
-const BASE_URL = "http://localhost:4000/";
+// const BASE_URL = "http://localhost:4000/";
+export const BASE_URL = "https://server-url-shortner.vercel.app/";
 
 export const APIroute = {
-  getUrl: BASE_URL + "url/red/history",
-  postUrl: BASE_URL + "url/shorten",
+  getUrl: BASE_URL + "urls/all-urls",
+  postUrl: BASE_URL + "shorten",
 };
