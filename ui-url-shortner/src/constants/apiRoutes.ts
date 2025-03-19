@@ -32,4 +32,6 @@ const BASE_URL = "http://localhost:4000/";
 export const APIroute = {
   getUrl: BASE_URL + "url/red/history",
   postUrl: BASE_URL + "url/shorten",
+  getRoot: BASE_URL,
+  getRootsGET: BASE_URL + "all",
 };
