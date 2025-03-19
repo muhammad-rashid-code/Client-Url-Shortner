@@ -1,39 +1,124 @@
 .main {
   display: flex;
+  height: 100vh;
+  align-items: center;
+  flex-direction: column; /* Stack elements vertically on small screens */
+  padding: 20px; /* Add padding for better spacing on small screens */
 }
 
 .inputContainer {
-  flex: 5;
+  flex: 1;
+  width: 100%; /* Take full width on small screens */
+  max-width: 600px; /* Limit width on larger screens */
+  margin: 0 auto; /* Center the container */
+  text-align: center; /* Center align content */
 }
 
 .urlLabel {
   font-weight: bolder;
+  display: block; /* Ensure label is on its own line */
+  margin-bottom: 10px; /* Add spacing below the label */
 }
 
 .urlInput {
   outline: none;
   border: 2px solid #000;
   border-radius: 5px;
-  width: 250px;
-  padding-left: 15px;
-  margin-left: 15px;
+  width: 100%; /* Take full width on small screens */
+  max-width: 300px; /* Limit width on larger screens */
+  padding: 10px; /* Increase padding for better touch experience */
+  margin: 10px 0; /* Add spacing around the input */
 }
 
 .button {
   font-weight: 600;
   border: 1px solid #000;
-  /* cursor: pointer; */
-  margin-left: 15px;
   border-radius: 10px;
-  padding: 4px 15px 4px 15px;
+  padding: 10px 20px; /* Increase padding for better touch experience */
   background-color: #ccc;
+  cursor: pointer;
+  margin: 10px 0; /* Add spacing around the button */
 }
 
 .button:hover {
   background-color: #c4bdbd;
-  cursor: pointer;
 }
 
 .allUrls {
-  flex: 5;
+  flex: 1;
+  width: 100%; /* Take full width on small screens */
+  max-width: 600px; /* Limit width on larger screens */
+  margin: 20px auto; /* Center the list and add spacing */
+  padding: 0; /* Remove default padding */
+  list-style-type: none; /* Remove bullet points */
+}
+
+.allUrls li {
+  margin: 10px 0; /* Add spacing between list items */
+}
+
+.allUrls a {
+  text-decoration: none; /* Remove underline from links */
+  color: #0070f3; /* Add a link color */
+  word-break: break-all; /* Ensure long URLs don't overflow */
+}
+
+/* Media Queries for Responsive Design */
+
+/* Tablet (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .main {
+    flex-direction: row; /* Align items horizontally on tablets */
+    align-items: flex-start; /* Align items to the top */
+    padding-top: 50px; /* Add more padding at the top */
+  }
+
+  .inputContainer {
+    flex: 1;
+    margin-right: 20px; /* Add spacing between input and list */
+  }
+
+  .allUrls {
+    flex: 1;
+    margin-left: 20px; /* Add spacing between input and list */
+  }
+}
+
+/* PC (1025px and above) */
+@media (min-width: 1025px) {
+  .main {
+    flex-direction: row; /* Align items horizontally on PCs */
+    align-items: center; /* Center items vertically */
+    padding: 0 50px; /* Add horizontal padding */
+  }
+
+  .inputContainer {
+    flex: 1;
+    margin-right: 50px; /* Add more spacing between input and list */
+  }
+
+  .allUrls {
+    flex: 2; /* Give more space to the list on larger screens */
+  }
+}
+
+/* Small Mobile Devices (up to 767px) */
+@media (max-width: 767px) {
+  .main {
+    height: auto; /* Allow the container to grow with content */
+    padding: 10px; /* Reduce padding for small screens */
+  }
+
+  .urlInput {
+    max-width: 100%; /* Take full width on small screens */
+  }
+
+  .button {
+    width: 100%; /* Make button full width */
+    padding: 12px 20px; /* Increase padding for better touch experience */
+  }
+
+  .allUrls {
+    margin-top: 20px; /* Add spacing above the list */
+  }
 }
